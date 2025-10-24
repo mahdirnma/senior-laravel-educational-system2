@@ -13,7 +13,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses = Course::where('is_active',1)->paginate(2);
+        return view('courses.index',compact('courses'));
     }
 
     /**

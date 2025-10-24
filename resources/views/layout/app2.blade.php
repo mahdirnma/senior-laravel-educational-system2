@@ -15,7 +15,7 @@
         <div class="w-5/6 h-full flex items-center justify-center">
             <nav>
                 <ul class="flex flex-row-reverse">
-                    <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{--{{route('courses.index')}}--}}">courses</a></li>
+                    <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('courses.index')}}">courses</a></li>
                     <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{--{{route('lessons')}}--}}">all lessons</a></li>
                 </ul>
             </nav>

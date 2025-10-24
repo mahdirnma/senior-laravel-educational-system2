@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
@@ -17,5 +18,6 @@ Route::middleware('auth:students')->group(function () {
 });
 Route::middleware('auth:teachers')->group(function () {
     Route::get('/teacher/dashboard',[TeacherController::class,'teacherDashboard'])->name('teacher.dashboard');
+    Route::resource('courses',CourseController::class);
     Route::post('/teacher/logout',[AuthController::class,'teachersLogout'])->name('teacher.logout');
 });
