@@ -15,6 +15,8 @@ Route::middleware('guest')->group(function () {
 });
 Route::middleware('auth:students')->group(function () {
     Route::get('/student/dashboard',[StudentController::class,'studentDashboard'])->name('student.dashboard');
+    Route::get('/student/profile',[StudentController::class,'studentProfile'])->name('student.profile');
+    Route::post('/student/lessons/{lesson}/store',[StudentController::class,'studentLessonStore'])->name('student.lessons.store');
     Route::post('/student/logout',[AuthController::class,'studentsLogout'])->name('student.logout');
 });
 Route::middleware('auth:teachers')->group(function () {

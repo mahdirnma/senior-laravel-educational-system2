@@ -24,6 +24,9 @@
                     @auth('teachers')
                         <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('courses.index')}}">courses</a></li>
                     @endauth
+                    @auth('students')
+                        <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('student.profile')}}">student's lessons</a></li>
+                    @endauth
                     <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('lessons.index')}}">all lessons</a></li>
                 </ul>
             </nav>

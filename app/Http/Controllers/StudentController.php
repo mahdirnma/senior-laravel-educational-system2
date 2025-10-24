@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lesson;
 use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -14,6 +16,19 @@ class StudentController extends Controller
     public function studentDashboard()
     {
         return view('students.dashboard');
+    }
+    public function studentProfile(){
+        $student=Auth::guard('students')->user();
+        $lessons=$student->lessons()->paginate(2);
+        return view('students.profile',compact('lessons'));
+
+    }
+
+    public function studentLessonStore(Lesson $lesson)
+    {
+        $student=Auth::guard('students')->user();
+        $student->lessons()->attach($lesson);
+        return redirect()->route('student.profile');
     }
     public function index()
     {
