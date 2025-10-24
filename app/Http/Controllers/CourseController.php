@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -22,7 +23,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('courses.create');
     }
 
     /**
@@ -30,7 +31,14 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        //
+        $course= Course::create([
+            ...$request->all(),
+            'teacher_id'=>Auth::guard('teachers')->id(),
+        ]);
+        if($course){
+            return redirect()->route('courses.index');
+        }
+        return redirect()->route('courses.create');
     }
 
     /**
