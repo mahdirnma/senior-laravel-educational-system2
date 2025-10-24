@@ -41,5 +41,13 @@ class AppServiceProvider extends ServiceProvider
             }
             return true;
         });
+        Gate::define('manage-teacher-lessons', function ($user,Lesson $lesson) {
+            if ($user instanceof Teacher) {
+                if ($lesson->field_id==$user->field_id){
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 }
