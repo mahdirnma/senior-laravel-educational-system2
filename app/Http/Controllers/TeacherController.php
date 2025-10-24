@@ -11,6 +11,10 @@ class TeacherController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function teacherDashboard()
+    {
+        return view('teachers.dashboard');
+    }
     public function index()
     {
         //

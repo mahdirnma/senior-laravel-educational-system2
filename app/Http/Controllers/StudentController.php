@@ -11,9 +11,13 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function studentDashboard()
+    {
+        return view('students.dashboard');
+    }
     public function index()
     {
-        //
+
     }
 
     /**
