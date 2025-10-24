@@ -16,7 +16,7 @@
                     <thead>
                     <tr class="h-12 border border-gray-400 border-b-2 border-b-gray-400">
                         @auth('teachers')
-{{--                            <td class="text-center">delete lesson</td>--}}
+                            <td class="text-center">delete lesson</td>
                             <td class="text-center">update lesson</td>
                         @endauth
                         @auth('students')
@@ -43,9 +43,8 @@
                                 </form>
                             </td>
                             @endauth
-{{--
                             <td class="text-center">
-                                @can('teacher-lesson',$lesson)
+                                @can('manage-delete-lessons',$lesson)
                                     <form action="{{route('lessons.destroy',compact('lesson'))}}" method="post">
                                         @csrf
                                         @method('delete')
@@ -53,7 +52,6 @@
                                     </form>
                                 @endcan
                             </td>
---}}
                             <td class="text-center">
                                 @can('manage-teacher-lessons',$lesson)
                                     <form action="{{route('lessons.edit',compact('lesson'))}}" method="get">

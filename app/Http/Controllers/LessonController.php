@@ -7,6 +7,7 @@ use App\Models\Lesson;
 use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class LessonController extends Controller
 {
@@ -59,8 +60,11 @@ class LessonController extends Controller
      */
     public function edit(Lesson $lesson)
     {
-        $courses = Course::where('is_active',1)->get();
-         return view('lessons.edit',compact('lesson','courses'));
+        if (Gate::allows('manage-teacher-lessons',$lesson)){
+            $courses = Course::where('is_active',1)->get();
+            return view('lessons.edit',compact('lesson','courses'));
+        }
+        return redirect()->route('lessons.index');
     }
 
     /**
@@ -68,11 +72,14 @@ class LessonController extends Controller
      */
     public function update(UpdateLessonRequest $request, Lesson $lesson)
     {
-        $status=$lesson->update($request->all());
-        if($status){
-            return redirect()->route('lessons.index');
+        if (Gate::allows('manage-teacher-lessons',$lesson)){
+            $status=$lesson->update($request->all());
+            if($status){
+                return redirect()->route('lessons.index');
+            }
+            return redirect()->route('lessons.edit');
         }
-        return redirect()->route('lessons.edit');
+        return redirect()->route('lessons.index');
     }
 
     /**
@@ -80,6 +87,9 @@ class LessonController extends Controller
      */
     public function destroy(Lesson $lesson)
     {
-        //
+        if (Gate::allows('manage-delete-lessons',$lesson)){
+            $lesson->update(['is_active'=>0]);
+        }
+        return redirect()->route('lessons.index');
     }
 }
