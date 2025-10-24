@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Lesson;
 use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
+use Illuminate\Support\Facades\Auth;
 
 class LessonController extends Controller
 {
@@ -23,7 +25,8 @@ class LessonController extends Controller
      */
     public function create()
     {
-        //
+        $courses = Course::where('is_active',1)->get();
+        return view('lessons.create',compact('courses'));
     }
 
     /**
@@ -31,7 +34,16 @@ class LessonController extends Controller
      */
     public function store(StoreLessonRequest $request)
     {
-        //
+        $teacher = Auth::guard('teachers')->user();
+        $lesson=Lesson::create([
+            ...$request->all(),
+            'field_id'=>$teacher->field_id,
+            'teacher_id'=>$teacher->id
+        ]);
+        if($lesson){
+            return redirect()->route('lessons.index');
+        }
+        return redirect()->route('lessons.create');
     }
 
     /**
