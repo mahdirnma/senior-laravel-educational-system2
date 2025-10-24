@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('description');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->year('year');
+            $table->foreignId('teacher_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

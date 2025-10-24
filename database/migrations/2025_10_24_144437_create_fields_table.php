@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('description');
+            $table->integer('unitNumber');
+            $table->string('branch');
+            $table->string('type');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
