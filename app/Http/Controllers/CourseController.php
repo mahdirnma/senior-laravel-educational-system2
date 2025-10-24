@@ -54,7 +54,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        return view('courses.edit',compact('course'));
     }
 
     /**
@@ -62,7 +62,11 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
+        $status = $course->update($request->all());
+        if($status){
+            return redirect()->route('courses.index');
+        }
+        return redirect()->route('courses.edit');
     }
 
     /**
