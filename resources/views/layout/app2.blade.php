@@ -11,12 +11,20 @@
 <body>
 <div class="w-svw h-svh">
     <div class="w-full h-[12%] flex items-center flex-row-reverse pr-12 text-xl">
-        <h1 class="font-bold text-xl">teachers panel</h1>
+        @auth('teachers')
+            <h1 class="font-bold text-xl">teachers panel</h1>
+        @endauth
+        @auth('students')
+            <h1 class="font-bold text-xl">students panel</h1>
+        @endauth
+
         <div class="w-5/6 h-full flex items-center justify-center">
             <nav>
                 <ul class="flex flex-row-reverse">
-                    <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('courses.index')}}">courses</a></li>
-                    <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{--{{route('lessons')}}--}}">all lessons</a></li>
+                    @auth('teachers')
+                        <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('courses.index')}}">courses</a></li>
+                    @endauth
+                    <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('lessons.index')}}">all lessons</a></li>
                 </ul>
             </nav>
         </div>

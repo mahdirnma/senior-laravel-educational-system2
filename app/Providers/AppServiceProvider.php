@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Course;
+use App\Models\Lesson;
+use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -29,6 +31,15 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
             return false;
+        });
+        Gate::define('manage-student-lessons', function ($user,Lesson $lesson) {
+            if ($user instanceof Student) {
+                if ($lesson->field_id==$user->field_id){
+                    return true;
+                }
+                return false;
+            }
+            return true;
         });
     }
 }
