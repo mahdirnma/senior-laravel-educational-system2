@@ -29,19 +29,22 @@
                         <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('courses.index')}}">courses</a></li>
                         <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('teachers.index')}}">teachers</a></li>
                     @endif
+                    @auth('admin')
+                            <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('students.index')}}">students</a></li>
+                    @endauth
+                        {{--
+                                            @auth('teachers')
+                                                <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('courses.index')}}">courses</a></li>
+                                                <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('teachers.index')}}">teachers</a></li>
+                                            @endauth
+                                            @auth('students')
+                                                <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('student.profile')}}">student's lessons</a></li>
+                                            @endauth
+                        --}}
+                    <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('lessons.index')}}">all lessons</a></li>
                     @if(Auth::guard('students')->check() || Auth::guard('admin')->check())
                         <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('student.profile')}}">student's lessons</a></li>
                     @endif
-{{--
-                    @auth('teachers')
-                        <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('courses.index')}}">courses</a></li>
-                        <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('teachers.index')}}">teachers</a></li>
-                    @endauth
-                    @auth('students')
-                        <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('student.profile')}}">student's lessons</a></li>
-                    @endauth
---}}
-                    <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('lessons.index')}}">all lessons</a></li>
                 </ul>
             </nav>
         </div>

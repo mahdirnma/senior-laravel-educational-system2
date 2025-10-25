@@ -1,13 +1,13 @@
 @extends('layout.app2')
 @section('title')
-    teacher's field
+    student's field
 @endsection
 @section('content')
     <div class="w-full h-[88%] bg-gray-200 flex items-center justify-center">
         <div class="w-[90%] h-5/6 bg-white rounded-xl pt-3 flex flex-col items-center">
             <div class="w-[90%] h-1/5 flex justify-between items-center border-b">
 
-                <h2 class="text-xl">teachers</h2>
+                <h2 class="text-xl">students</h2>
             </div>
             <div class="w-[90%] h-3/5 flex flex-col justify-center">
                 <table class="w-full min-h-full border border-gray-400">

@@ -30,8 +30,16 @@ class StudentController extends Controller
         $student->lessons()->attach($lesson);
         return redirect()->route('student.profile');
     }
+
+    public function studentField(Student $student)
+    {
+        $field=$student->field;
+        return view('students.field',compact('field'));
+    }
     public function index()
     {
+        $students=Student::where('is_active',1)->paginate(2);
+        return view('students.index',compact('students'));
     }
 
     /**

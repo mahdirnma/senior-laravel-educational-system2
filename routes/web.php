@@ -32,8 +32,9 @@ Route::middleware('auth:teachers,admin')->group(function () {
 });
 Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/dashboard',[UserController::class,'adminDashboard'])->name('admin.dashboard');
-    Route::resource('teachers',TeacherController::class)->except('index');
-    Route::resource('students',StudentController::class);
+    Route::resource('teachers',TeacherController::class)->only(['create','store']);
+    Route::resource('students',StudentController::class)->only(['index','create','store']);
+    Route::get('/student/{student}/field',[StudentController::class,'studentField'])->name('student.field');
     Route::post('/admin/logout',[AuthController::class,'adminLogout'])->name('admin.logout');
 });
 Route::middleware('auth:teachers,students')->group(function () {
