@@ -62,7 +62,7 @@
                                         <option value="{{$teacher->id}}">{{$teacher->name}}</option>
                                     @endforeach
                                 </select>
-                                @error('field_id')
+                                @error('teacher_id')
                                 <p class="text-red-700">{{$message}}</p>
                                 @enderror
                             </div>

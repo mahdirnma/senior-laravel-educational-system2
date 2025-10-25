@@ -9,6 +9,9 @@
                 @auth('teachers')
                 <a href="{{route('lessons.create')}}" class="px-10 py-3 rounded-xl font-light text-white bg-gray-800">add lesson +</a>
                 @endauth
+                @auth('admin')
+                <a href="{{route('lessons.create')}}" class="px-10 py-3 rounded-xl font-light text-white bg-gray-800">add lesson +</a>
+                @endauth
                 <h2 class="text-xl">lessons</h2>
             </div>
             <div class="w-[90%] h-3/5 flex flex-col justify-center">

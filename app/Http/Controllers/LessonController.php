@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Field;
 use App\Models\Lesson;
 use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
+use App\Models\Teacher;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -26,8 +28,15 @@ class LessonController extends Controller
      */
     public function create()
     {
-        $courses = Course::where('is_active',1)->get();
-        return view('lessons.create',compact('courses'));
+        if (Auth::guard('teachers')->check()) {
+            $courses = Course::where('is_active',1)->get();
+            return view('lessons.create',compact('courses'));
+        }elseif (Auth::guard('admin')->check()) {
+            $teachers = Teacher::where('is_active',1)->get();
+            $courses = Course::where('is_active',1)->get();
+            $fields = Field::where('is_active',1)->get();
+            return view('lessons.create',compact('courses','teachers','fields'));
+        }
     }
 
     /**
@@ -38,8 +47,9 @@ class LessonController extends Controller
         $teacher = Auth::guard('teachers')->user();
         $lesson=Lesson::create([
             ...$request->all(),
-            'field_id'=>$teacher->field_id,
-            'teacher_id'=>$teacher->id
+            'field_id'=>$teacher->id??$request->field_id,
+//            'teacher_id'=>$teacher->id??$request->teacher_id
+            'teacher_id'=>Auth::guard('teachers')->check()?$teacher->id:$request->teacher_id,
         ]);
         if($lesson){
             return redirect()->route('lessons.index');
