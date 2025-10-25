@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
+use App\Models\Teacher;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CourseController extends Controller
 {
@@ -23,7 +25,18 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('courses.create');
+        if (Auth::guard('teachers')->check()) {
+            return view('courses.create');
+        }elseif (Auth::guard('admin')->check()) {
+            $teachers = Teacher::where('is_active',1)->get();
+            return view('courses.create',compact('teachers'));
+        }
+/*        if (Gate::allows('isAdmin')) {
+            $teachers = Teacher::where('is_active',1)->get();
+            return view('courses.create',compact('teachers'));
+        }elseif (Gate::allows('isTeacher')) {
+            return view('courses.create');
+        }*/
     }
 
     /**
@@ -31,9 +44,10 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
+        $teacher=Auth::guard('teachers')->user();
         $course= Course::create([
             ...$request->all(),
-            'teacher_id'=>Auth::guard('teachers')->id(),
+            'teacher_id'=>$teacher->id??$request->teacher_id
         ]);
         if($course){
             return redirect()->route('courses.index');

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreCourseRequest extends FormRequest
 {
@@ -21,6 +22,16 @@ class StoreCourseRequest extends FormRequest
      */
     public function rules(): array
     {
+        if (Auth::guard('admin')->check()) {
+            return [
+                'title' => 'required',
+                'description' => 'required',
+                'start_date' => 'required',
+                'end_date' => 'required',
+                'year' => 'required',
+                'teacher_id' => 'required',
+            ];
+        }
         return [
             'title' => 'required',
             'description' => 'required',

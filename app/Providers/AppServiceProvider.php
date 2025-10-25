@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Student;
 use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -54,6 +55,18 @@ class AppServiceProvider extends ServiceProvider
                 if ($lesson->field_id==$user->field_id && $lesson->teacher_id==$user->id){
                     return true;
                 }
+            }
+            return false;
+        });
+        Gate::define('isAdmin', function ($user) {
+            if ($user instanceof User) {
+                return true;
+            }
+            return false;
+        });
+        Gate::define('isTeacher', function ($user) {
+            if ($user instanceof Teacher) {
+                return true;
             }
             return false;
         });
