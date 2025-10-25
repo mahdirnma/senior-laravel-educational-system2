@@ -71,8 +71,15 @@ class LessonController extends Controller
     public function edit(Lesson $lesson)
     {
         if (Gate::allows('manage-teacher-lessons',$lesson)){
-            $courses = Course::where('is_active',1)->get();
-            return view('lessons.edit',compact('lesson','courses'));
+            if (Auth::guard('teachers')->check()) {
+                $courses = Course::where('is_active',1)->get();
+                return view('lessons.edit',compact('lesson','courses'));
+            }elseif (Auth::guard('admin')->check()) {
+                $teachers = Teacher::where('is_active',1)->get();
+                $courses = Course::where('is_active',1)->get();
+                $fields = Field::where('is_active',1)->get();
+                return view('lessons.edit',compact('lesson','courses','teachers','fields'));
+            }
         }
         return redirect()->route('lessons.index');
     }
