@@ -1,4 +1,5 @@
-<!doctype html>
+@php use Illuminate\Support\Facades\Auth; @endphp
+    <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,10 +18,21 @@
         @auth('students')
             <h1 class="font-bold text-xl">students panel</h1>
         @endauth
+        @auth('admin')
+            <h1 class="font-bold text-xl">admin panel</h1>
+        @endauth
 
         <div class="w-5/6 h-full flex items-center justify-center">
             <nav>
                 <ul class="flex flex-row-reverse">
+                    @if(Auth::guard('teachers')->check() || Auth::guard('admin')->check())
+                        <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('courses.index')}}">courses</a></li>
+                        <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('teachers.index')}}">teachers</a></li>
+                    @endif
+                    @if(Auth::guard('students')->check() || Auth::guard('admin')->check())
+                        <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('student.profile')}}">student's lessons</a></li>
+                    @endif
+{{--
                     @auth('teachers')
                         <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('courses.index')}}">courses</a></li>
                         <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('teachers.index')}}">teachers</a></li>
@@ -28,28 +40,29 @@
                     @auth('students')
                         <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('student.profile')}}">student's lessons</a></li>
                     @endauth
+--}}
                     <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('lessons.index')}}">all lessons</a></li>
                 </ul>
             </nav>
         </div>
-            @auth('teachers')
-                <form action="{{route('teacher.logout')}}" method="post">
-                    @csrf
-                    <button type="submit" class="text-red-700 font-bold cursor-pointer"><- logout</button>
-                </form>
-            @endauth
-            @auth('students')
-                <form action="{{route('student.logout')}}" method="post">
-                    @csrf
-                    <button type="submit" class="text-red-700 font-bold cursor-pointer"><- logout</button>
-                </form>
-            @endauth
-            @auth('admin')
-                <form action="{{route('admin.logout')}}" method="post">
-                    @csrf
-                    <button type="submit" class="text-red-700 font-bold cursor-pointer"><- logout</button>
-                </form>
-            @endauth
+        @auth('teachers')
+            <form action="{{route('teacher.logout')}}" method="post">
+                @csrf
+                <button type="submit" class="text-red-700 font-bold cursor-pointer"><- logout</button>
+            </form>
+        @endauth
+        @auth('students')
+            <form action="{{route('student.logout')}}" method="post">
+                @csrf
+                <button type="submit" class="text-red-700 font-bold cursor-pointer"><- logout</button>
+            </form>
+        @endauth
+        @auth('admin')
+            <form action="{{route('admin.logout')}}" method="post">
+                @csrf
+                <button type="submit" class="text-red-700 font-bold cursor-pointer"><- logout</button>
+            </form>
+        @endauth
     </div>
     @yield('content')
 </div>

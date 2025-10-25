@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Field;
 use App\Models\Teacher;
 use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
@@ -32,7 +33,8 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        //
+        $fields = Field::where('is_active',1)->get();
+        return view('teachers.create',compact('fields'));
     }
 
     /**
@@ -40,7 +42,11 @@ class TeacherController extends Controller
      */
     public function store(StoreTeacherRequest $request)
     {
-        //
+        $teacher=Teacher::create($request->all());
+        if($teacher){
+            return redirect()->route('teachers.index');
+        }
+        return redirect()->back();
     }
 
     /**

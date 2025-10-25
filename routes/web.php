@@ -16,13 +16,13 @@ Route::middleware('guest')->group(function () {
     Route::get('/admin/login',[AuthController::class,'adminLoginForm'])->name('admin.login.form');
     Route::post('/admin/login',[AuthController::class,'adminLogin'])->name('admin.login');
 });
-Route::middleware('auth:students')->group(function () {
+Route::middleware('auth:students,admin')->group(function () {
     Route::get('/student/dashboard',[StudentController::class,'studentDashboard'])->name('student.dashboard');
     Route::get('/student/profile',[StudentController::class,'studentProfile'])->name('student.profile');
     Route::post('/student/lessons/{lesson}/store',[StudentController::class,'studentLessonStore'])->name('student.lessons.store');
     Route::post('/student/logout',[AuthController::class,'studentsLogout'])->name('student.logout');
 });
-Route::middleware('auth:teachers')->group(function () {
+Route::middleware('auth:teachers,admin')->group(function () {
     Route::get('/teacher/dashboard',[TeacherController::class,'teacherDashboard'])->name('teacher.dashboard');
     Route::resource('courses',CourseController::class);
     Route::resource('lessons',LessonController::class)->except('index');
@@ -32,6 +32,8 @@ Route::middleware('auth:teachers')->group(function () {
 });
 Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/dashboard',[UserController::class,'adminDashboard'])->name('admin.dashboard');
+    Route::resource('teachers',TeacherController::class)->except('index');
+    Route::resource('students',StudentController::class);
     Route::post('/admin/logout',[AuthController::class,'adminLogout'])->name('admin.logout');
 });
 Route::middleware('auth:teachers,students')->group(function () {
