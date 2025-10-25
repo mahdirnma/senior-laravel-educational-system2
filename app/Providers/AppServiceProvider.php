@@ -30,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
                 if ($course->teacher->id==$user->id){
                     return true;
                 }
+            }elseif ($user instanceof User) {
+                return true;
             }
             return false;
         });
@@ -47,6 +49,8 @@ class AppServiceProvider extends ServiceProvider
                 if ($lesson->field_id==$user->field_id){
                     return true;
                 }
+            }elseif ($user instanceof User) {
+                return true;
             }
             return false;
         });
@@ -55,6 +59,8 @@ class AppServiceProvider extends ServiceProvider
                 if ($lesson->field_id==$user->field_id && $lesson->teacher_id==$user->id){
                     return true;
                 }
+            }elseif ($user instanceof User) {
+                return true;
             }
             return false;
         });

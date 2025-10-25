@@ -41,7 +41,7 @@
                                                 <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('student.profile')}}">student's lessons</a></li>
                                             @endauth
                         --}}
-                    <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('lessons.index')}}">all lessons</a></li>
+                    <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('lessons.index')}}">lessons</a></li>
                     @if(Auth::guard('students')->check() || Auth::guard('admin')->check())
                         <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('student.profile')}}">student's lessons</a></li>
                     @endif

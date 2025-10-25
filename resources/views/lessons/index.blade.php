@@ -19,6 +19,10 @@
                             <td class="text-center">delete lesson</td>
                             <td class="text-center">update lesson</td>
                         @endauth
+                        @auth('admin')
+                            <td class="text-center">delete lesson</td>
+                            <td class="text-center">update lesson</td>
+                        @endauth
                         @auth('students')
                             <td class="text-center">choose lesson</td>
                             <td class="text-center"></td>

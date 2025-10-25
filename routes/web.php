@@ -37,6 +37,6 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/student/{student}/field',[StudentController::class,'studentField'])->name('student.field');
     Route::post('/admin/logout',[AuthController::class,'adminLogout'])->name('admin.logout');
 });
-Route::middleware('auth:teachers,students')->group(function () {
+Route::middleware('auth:teachers,students,admin')->group(function () {
     Route::resource('lessons',LessonController::class)->only(['index']);
 });
