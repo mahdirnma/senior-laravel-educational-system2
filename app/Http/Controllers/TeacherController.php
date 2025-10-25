@@ -33,7 +33,7 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        $fields = Field::where('is_active',1)->get();
+        $fields = Field::where('is_active',1)->where('type','teacher')->get();
         return view('teachers.create',compact('fields'));
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Field;
 use App\Models\Lesson;
 use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
@@ -47,7 +48,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        $fields=Field::where('is_active',1)->where('type','student')->get();
+        return view('students.create',compact('fields'));
     }
 
     /**
@@ -55,7 +57,11 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest $request)
     {
-        //
+        $student=Student::create($request->all());
+        if ($student) {
+            return redirect()->route('students.index');
+        }
+        return redirect()->back();
     }
 
     /**
