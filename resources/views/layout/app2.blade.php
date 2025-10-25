@@ -23,6 +23,7 @@
                 <ul class="flex flex-row-reverse">
                     @auth('teachers')
                         <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('courses.index')}}">courses</a></li>
+                        <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('teachers.index')}}">teachers</a></li>
                     @endauth
                     @auth('students')
                         <li class="w-44 h-full flex justify-center items-center font-mono text-balance"><a href="{{route('student.profile')}}">student's lessons</a></li>

@@ -15,9 +15,16 @@ class TeacherController extends Controller
     {
         return view('teachers.dashboard');
     }
+
+    public function teacherField(Teacher $teacher)
+    {
+        $field=$teacher->field;
+        return view('teachers.field',compact('field'));
+    }
     public function index()
     {
-        //
+        $teachers = Teacher::where('is_active',1)->paginate(2);
+        return view('teachers.index',compact('teachers'));
     }
 
     /**
