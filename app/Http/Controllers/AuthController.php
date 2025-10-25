@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginAdminRequest;
 use App\Http\Requests\LoginStudentRequest;
 use App\Http\Requests\LoginTeacherRequest;
 use Illuminate\Http\Request;
@@ -33,6 +34,18 @@ class AuthController extends Controller
         }
         return redirect()->route('teacher.dashboard');
     }
+    public function adminLoginForm(){
+        return view('auth.admin.login');
+    }
+
+    public function adminLogin(LoginAdminRequest $request)
+    {
+        $myData= $request->only(['email', 'password']);
+        if (!Auth::guard('admin')->attempt($myData)) {
+            return redirect()->route('admin.login.form');
+        }
+        return redirect()->route('admin.dashboard');
+    }
     public function studentsLogout(){
         Auth::guard('students')->logout();
         return redirect()->route('student.login.form');
@@ -40,5 +53,9 @@ class AuthController extends Controller
     public function teachersLogout(){
         Auth::guard('teachers')->logout();
         return redirect()->route('teacher.login.form');
+    }
+    public function adminLogout(){
+        Auth::guard('admin')->logout();
+        return redirect()->route('admin.login.form');
     }
 }

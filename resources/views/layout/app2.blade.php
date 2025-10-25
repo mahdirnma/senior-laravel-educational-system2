@@ -32,10 +32,24 @@
                 </ul>
             </nav>
         </div>
-        <form action="{{route('teacher.logout')}}" method="post">
-            @csrf
-            <button type="submit" class="text-red-700 font-bold cursor-pointer"><- logout</button>
-        </form>
+            @auth('teachers')
+                <form action="{{route('teacher.logout')}}" method="post">
+                    @csrf
+                    <button type="submit" class="text-red-700 font-bold cursor-pointer"><- logout</button>
+                </form>
+            @endauth
+            @auth('students')
+                <form action="{{route('student.logout')}}" method="post">
+                    @csrf
+                    <button type="submit" class="text-red-700 font-bold cursor-pointer"><- logout</button>
+                </form>
+            @endauth
+            @auth('admin')
+                <form action="{{route('admin.logout')}}" method="post">
+                    @csrf
+                    <button type="submit" class="text-red-700 font-bold cursor-pointer"><- logout</button>
+                </form>
+            @endauth
     </div>
     @yield('content')
 </div>

@@ -5,6 +5,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 Route::redirect('/','/student/login');
 Route::middleware('guest')->group(function () {
@@ -12,6 +13,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/student/login',[AuthController::class,'studentsLogin'])->name('student.login');
     Route::get('/teacher/login',[AuthController::class,'teachersLoginForm'])->name('teacher.login.form');
     Route::post('/teacher/login',[AuthController::class,'teachersLogin'])->name('teacher.login');
+    Route::get('/admin/login',[AuthController::class,'adminLoginForm'])->name('admin.login.form');
+    Route::post('/admin/login',[AuthController::class,'adminLogin'])->name('admin.login');
 });
 Route::middleware('auth:students')->group(function () {
     Route::get('/student/dashboard',[StudentController::class,'studentDashboard'])->name('student.dashboard');
@@ -26,6 +29,10 @@ Route::middleware('auth:teachers')->group(function () {
     Route::resource('teachers',TeacherController::class)->only('index');
     Route::get('/teacher/{teacher}/field',[TeacherController::class,'teacherField'])->name('teacher.field');
     Route::post('/teacher/logout',[AuthController::class,'teachersLogout'])->name('teacher.logout');
+});
+Route::middleware('auth:admin')->group(function () {
+    Route::get('/admin/dashboard',[UserController::class,'adminDashboard'])->name('admin.dashboard');
+    Route::post('/admin/logout',[AuthController::class,'adminLogout'])->name('admin.logout');
 });
 Route::middleware('auth:teachers,students')->group(function () {
     Route::resource('lessons',LessonController::class)->only(['index']);
