@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateCourseRequest extends FormRequest
 {
@@ -21,12 +22,22 @@ class UpdateCourseRequest extends FormRequest
      */
     public function rules(): array
     {
+        if (Auth::guard('teachers')->check()) {
+            return [
+                'title' => 'required',
+                'description' => 'required',
+                'start_date' => 'required',
+                'end_date' => 'required',
+                'year' => 'required',
+            ];
+        }
         return [
             'title' => 'required',
             'description' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
             'year' => 'required',
+            'teacher_id' => 'required',
         ];
     }
 }

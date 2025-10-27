@@ -68,7 +68,12 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        return view('courses.edit',compact('course'));
+        if (Auth::guard('teachers')->check()) {
+            return view('courses.edit',compact('course'));
+        }elseif (Auth::guard('admin')->check()) {
+            $teachers = Teacher::where('is_active',1)->get();
+            return view('courses.edit',compact('course','teachers'));
+        }
     }
 
     /**
