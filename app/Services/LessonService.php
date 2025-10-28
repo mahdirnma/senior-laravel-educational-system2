@@ -11,5 +11,14 @@ class LessonService
         return app(TryService::class)(function (){
             return Lesson::where('is_active',1)->get();
         });
+
+    }
+
+    public function storeLesson($request)
+    {
+        return app(TryService::class)(function () use ($request){
+            return Lesson::create($request->all());
+        });
+
     }
 }

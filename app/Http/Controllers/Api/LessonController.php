@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\StoreLessonRequest;
 use App\Http\Resources\LessonApiResource;
 use App\Models\Lesson;
 use App\Services\ApiResponseBuilder;
@@ -26,9 +27,13 @@ class LessonController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreLessonRequest $request)
     {
-        //
+        $result=$this->service->storeLesson($request);
+        $actionResult=$result->success?
+            (new ApiResponseBuilder())->message("Lesson created successfully."):
+            (new ApiResponseBuilder())->message("Lesson not created successfully.");
+        return $actionResult->data(new LessonApiResource($result->data))->response();
     }
 
     /**
@@ -36,7 +41,6 @@ class LessonController extends Controller
      */
     public function show(Lesson $lesson)
     {
-        //
     }
 
     /**
