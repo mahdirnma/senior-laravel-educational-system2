@@ -19,6 +19,12 @@ class LessonService
         return app(TryService::class)(function () use ($request){
             return Lesson::create($request->all());
         });
+    }
 
+    public function showLesson($lesson)
+    {
+        return app(TryService::class)(function () use ($lesson){
+            return $lesson;
+        });
     }
 }

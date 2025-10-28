@@ -41,6 +41,11 @@ class LessonController extends Controller
      */
     public function show(Lesson $lesson)
     {
+        $result=$this->service->showLesson($lesson);
+        $actionResult=$result->success?
+            (new ApiResponseBuilder())->message("Lesson retrieved successfully."):
+            (new ApiResponseBuilder())->message("Lesson not found.");
+        return $actionResult->data(new LessonApiResource($result->data))->response();
     }
 
     /**
