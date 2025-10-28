@@ -34,4 +34,9 @@ class CourseService
             return $course;
         });
     }
+    public function deleteCourse($course){
+        return app(TryService::class)(function () use ($course){
+            $course->update(['is_active'=>0]);
+        });
+    }
 }

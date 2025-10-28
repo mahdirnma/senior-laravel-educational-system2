@@ -65,6 +65,10 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        $result=$this->service->deleteCourse($course);
+        $actionResult=$result->success?
+            (new ApiResponseBuilder())->message("Course deleted successfully."):
+            (new ApiResponseBuilder())->message("Unable to delete course.");
+        return  $actionResult->response();
     }
 }
