@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\StoreCourseRequest;
 use App\Http\Resources\CourseApiResource;
 use App\Models\Course;
 use App\Services\ApiResponseBuilder;
@@ -25,9 +26,13 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCourseRequest $request)
     {
-        //
+        $result=$this->service->addCourse($request);
+        $actionResult=$result->success?
+            (new ApiResponseBuilder())->message("Course created successfully."):
+            (new ApiResponseBuilder())->message("Unable to create Course.");
+        return  $actionResult->data(new CourseApiResource($result->data))->response();
     }
 
     /**
@@ -35,7 +40,11 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        //
+        $result=$this->service->getCourse($course);
+        $actionResult=$result->success?
+            (new ApiResponseBuilder())->message("Course retrieved successfully."):
+            (new ApiResponseBuilder())->message("Unable to retrieve course.");
+        return  $actionResult->data(new CourseApiResource($result->data))->response();
     }
 
     /**

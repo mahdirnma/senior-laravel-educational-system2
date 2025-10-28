@@ -51,6 +51,18 @@ return [
         'admin' => [
             'driver' => 'session',
             'provider' => 'admin',
+        ],
+        'api_teachers' => [
+            'driver' => 'sanctum',
+            'provider' => 'api_teachers',
+        ],
+        'api_students' => [
+            'driver' => 'sanctum',
+            'provider' => 'api_students',
+        ],
+        'api_admin' => [
+            'driver' => 'sanctum',
+            'provider' => 'api_admin',
         ]
     ],
 
@@ -85,6 +97,18 @@ return [
             'model' => env('AUTH_MODEL', App\Models\Student::class),
         ],
         'admin' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', \App\Models\User::class),
+        ],
+        'api_teachers' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', \App\Models\Teacher::class),
+        ],
+        'api_students' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', \App\Models\Student::class),
+        ],
+        'api_admin' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', \App\Models\User::class),
         ]

@@ -12,4 +12,18 @@ class CourseService
             return Course::where('is_active',1)->get();
         });
     }
+
+    public function addCourse($request)
+    {
+        return app(TryService::class)(function () use ($request){
+            return Course::create($request->all());
+        });
+    }
+
+    public function getCourse($course)
+    {
+        return app(TryService::class)(function () use ($course){
+            return $course;
+        });
+    }
 }
