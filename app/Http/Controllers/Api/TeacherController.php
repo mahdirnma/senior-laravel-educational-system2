@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Resources\TeacherApiResource;
 use App\Models\Teacher;
 use App\Services\ApiResponseBuilder;
@@ -25,9 +26,13 @@ class TeacherController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTeacherRequest $request)
     {
-        //
+        $result=$this->service->setTeacher($request);
+        $actionResult=$result->success?
+            (new ApiResponseBuilder())->message('teacher created successfully.'):
+            (new ApiResponseBuilder())->message('teacher created successfully fails.');
+        return $actionResult->data(new TeacherApiResource($result->data))->response();
     }
 
     /**
