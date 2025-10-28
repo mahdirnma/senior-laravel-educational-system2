@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreCourseRequest;
+use App\Http\Requests\Api\UpdateCourseRequest;
 use App\Http\Resources\CourseApiResource;
 use App\Models\Course;
 use App\Services\ApiResponseBuilder;
@@ -50,9 +51,13 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Course $course)
+    public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
+        $result=$this->service->updateCourse($request, $course);
+        $actionResult=$result->success?
+            (new ApiResponseBuilder())->message("Course updated successfully."):
+            (new ApiResponseBuilder())->message("Unable to update course.");
+        return  $actionResult->data(new CourseApiResource($course))->response();
     }
 
     /**

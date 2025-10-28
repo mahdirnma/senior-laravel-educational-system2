@@ -26,4 +26,12 @@ class CourseService
             return $course;
         });
     }
+
+    public function updateCourse($request, $course)
+    {
+        return app(TryService::class)(function () use ($request, $course){
+            $course->update($request->all());
+            return $course;
+        });
+    }
 }
