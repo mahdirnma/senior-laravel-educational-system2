@@ -27,4 +27,10 @@ class LessonService
             return $lesson;
         });
     }
+    public function updateLesson($request, $lesson){
+        return app(TryService::class)(function () use ($request, $lesson){
+            $lesson->update($request->all());
+            return $lesson;
+        });
+    }
 }
