@@ -66,6 +66,10 @@ class LessonController extends Controller
      */
     public function destroy(Lesson $lesson)
     {
-        //
+        $result=$this->service->destroyLesson($lesson);
+        $actionResult=$result->success?
+            (new ApiResponseBuilder())->message("Lesson deleted successfully."):
+            (new ApiResponseBuilder())->message("Lesson not deleted successfully.");
+        return $actionResult->response();
     }
 }

@@ -33,4 +33,10 @@ class LessonService
             return $lesson;
         });
     }
+    public function destroyLesson($lesson){
+        return app(TryService::class)(function () use ($lesson){
+            $lesson->update(['is_active' => 0]);
+            return $lesson;
+        });
+    }
 }
