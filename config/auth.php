@@ -102,7 +102,7 @@ return [
         ],
         'api_teachers' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', \App\Models\Teacher::class),
+            'model' => \App\Models\Teacher::class,
         ],
         'api_students' => [
             'driver' => 'eloquent',
