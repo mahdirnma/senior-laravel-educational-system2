@@ -49,4 +49,12 @@ class LessonService
             return $lesson;
         });
     }
+
+    public function studentLessons()
+    {
+        return app(TryService::class)(function (){
+            $user = Auth::guard('api_students')->user();
+            return $user->lessons;
+        });
+    }
 }

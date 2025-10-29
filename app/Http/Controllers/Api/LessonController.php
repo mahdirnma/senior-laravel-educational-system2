@@ -72,4 +72,13 @@ class LessonController extends Controller
             (new ApiResponseBuilder())->message("Lesson not deleted successfully.");
         return $actionResult->response();
     }
+
+    public function studentLessons()
+    {
+        $result=$this->service->studentLessons();
+        $actionResult=$result->success?
+            (new ApiResponseBuilder())->message("Lesson retrieved successfully."):
+            (new ApiResponseBuilder())->message("Lesson not found.");
+        return $actionResult->data(LessonApiResource::collection($result->data))->response();
+    }
 }
