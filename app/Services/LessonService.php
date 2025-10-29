@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Lesson;
+use Illuminate\Support\Facades\Auth;
 
 class LessonService
 {
@@ -17,7 +18,16 @@ class LessonService
     public function storeLesson($request)
     {
         return app(TryService::class)(function () use ($request){
-            return Lesson::create($request->all());
+            if (Auth::guard('api_admin')->check()){
+                return Lesson::create($request->all());
+            }elseif (Auth::guard('api_teachers')->check()){
+                return Lesson::create([
+                    ...$request->all(),
+                    'teacher_id' => Auth::guard('api_teachers')->id(),
+                    'field_id' => Auth::guard('api_teachers')->user()->field_id,
+                ]);
+            }
+            return response()->json(['error' => 'Unauthorized'], 401);
         });
     }
 

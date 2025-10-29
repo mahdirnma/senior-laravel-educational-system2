@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Course;
+use Illuminate\Support\Facades\Auth;
 
 class CourseService
 {
@@ -16,7 +17,15 @@ class CourseService
     public function addCourse($request)
     {
         return app(TryService::class)(function () use ($request){
-            return Course::create($request->all());
+            if (Auth::guard('api_admin')->check()) {
+                return Course::create($request->all());
+            }elseif(Auth::guard('api_teachers')->check()){
+                return Course::create([
+                    ...$request->all(),
+                    'teacher_id'=>Auth::guard('api_teachers')->id()
+                ]);
+            }
+            return response()->json(['error' => 'Unauthorized'], 401);
         });
     }
 
