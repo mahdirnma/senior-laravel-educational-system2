@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User;
-
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 class Student extends User
 {
+    use HasApiTokens, Notifiable;
     protected $fillable = [
         'name',
         'email',

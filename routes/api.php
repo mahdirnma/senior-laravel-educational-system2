@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AdminLoginController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\LessonController;
 use App\Http\Controllers\Api\StudentController;
+use App\Http\Controllers\Api\StudentLoginController;
 use App\Http\Controllers\Api\TeacherController;
 use App\Http\Controllers\Api\TeacherLoginController;
 use Illuminate\Http\Request;
@@ -16,3 +17,4 @@ Route::middleware('auth:api_admin')->as('api.')->group(function () {
 });
 Route::post('/admin/login', AdminLoginController::class)->name('api.admin.login');
 Route::post('/teachers/login', TeacherLoginController::class)->name('api.teachers.login');
+Route::post('/students/login', StudentLoginController::class)->name('api.students.login');
