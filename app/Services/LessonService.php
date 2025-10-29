@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Lesson;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LessonService
@@ -55,6 +56,16 @@ class LessonService
         return app(TryService::class)(function (){
             $user = Auth::guard('api_students')->user();
             return $user->lessons;
+        });
+    }
+
+    public function storeStudentLesson($request)
+    {
+        return app(TryService::class)(function () use ($request){
+            if (Auth::guard('api_students')->check()){
+                $user = Auth::guard('api_students')->user();
+                $user->lessons()->attach($request->lesson_id);
+            }
         });
     }
 }

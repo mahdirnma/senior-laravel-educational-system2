@@ -81,4 +81,13 @@ class LessonController extends Controller
             (new ApiResponseBuilder())->message("Lesson not found.");
         return $actionResult->data(LessonApiResource::collection($result->data))->response();
     }
+
+    public function storeStudentLesson(Request $request)
+    {
+        $result=$this->service->storeStudentLesson($request);
+        $actionResult=$result->success?
+            (new ApiResponseBuilder())->message("Lesson stored successfully."):
+            (new ApiResponseBuilder())->message("Lesson not created successfully.");
+        return $actionResult->response();
+    }
 }

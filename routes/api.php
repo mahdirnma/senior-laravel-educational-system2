@@ -23,6 +23,7 @@ Route::middleware('auth:api_admin,api_teachers,api_students')->as('api.')->group
 });
 Route::middleware('auth:api_students')->as('api.')->group(function () {
     Route::get('/student/lessons', [LessonController::class, 'studentLessons']);
+    Route::post('/student/lessons/store', [LessonController::class, 'storeStudentLesson']);
 });
 Route::post('/admin/login', AdminLoginController::class)->name('api.admin.login');
 Route::post('/teachers/login', TeacherLoginController::class)->name('api.teachers.login');
